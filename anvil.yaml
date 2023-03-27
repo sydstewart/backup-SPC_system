@@ -3,7 +3,7 @@ scheduled_tasks:
   time_spec:
     n: 1
     every: day
-    at: {minute: 0, hour: 19}
+    at: {minute: 0, hour: 11}
   job_id: CSEAIMCX
 dependencies: []
 services:
@@ -117,9 +117,43 @@ runtime_options: {version: 2, client_version: '3', server_version: python3-full,
 metadata: {title: Backup SPC System}
 startup_form: Form1
 db_schema:
-  cases_arriving:
-    title: cases_arriving
-    client: full
+  waiting_on_4s:
+    title: Waiting_on_4S
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 327}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
+  problem_cases_per_week:
+    title: problem_cases_per_week
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 313}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
+  problem_cases_with_4s:
+    title: problem_cases_with_4s
+    client: search
     server: full
     columns:
     - name: Date_Entered
@@ -134,38 +168,64 @@ db_schema:
     - name: noteCol
       admin_ui: {width: 200}
       type: string
-  changes:
-    title: changes
-    client: full
+  charts:
+    title: charts
+    client: search
     server: full
     columns:
     - name: chartid
       admin_ui: {width: 200}
       type: number
-    - name: chartname
-      admin_ui: {width: 200}
+    - name: Chart_Name
+      admin_ui: {width: 296}
       type: string
-    - name: change_type
-      admin_ui: {width: 200}
-      type: string
-    - name: change_date
-      admin_ui: {width: 200}
-      type: datetime
-    - name: new_mean
+    - name: order
       admin_ui: {width: 200}
       type: number
-    - name: reviewed
+    - name: ChartSQL
+      admin_ui: {width: 251}
+      type: string
+    - name: Active
       admin_ui: {width: 200}
       type: bool
-    - name: short_date
+    - name: StartDate
       admin_ui: {width: 200}
       type: date
+    - name: EndDate
+      admin_ui: {width: 200}
+      type: date
+    - name: Date_Column_Name
+      admin_ui: {width: 200}
+      type: string
+    - name: Measure_Column_Name
+      admin_ui: {width: 200}
+      type: string
+    - name: Source
+      admin_ui: {width: 200}
+      type: string
     - name: tablename
+      admin_ui: {width: 236}
+      type: string
+  unassigned_cases:
+    title: unassigned_cases
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 200}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
       admin_ui: {width: 200}
       type: string
   users:
     title: Users
-    client: none
+    client: search
     server: full
     columns:
     - name: email
@@ -204,376 +264,191 @@ db_schema:
     - name: email_confirmation_key
       admin_ui: {width: 200}
       type: string
-  change_notes:
-    title: change_notes
-    client: none
+  projects_with_customers:
+    title: projects_with_customers
+    client: search
     server: full
     columns:
-    - name: new_change_note_id
+    - name: Date_Entered
+      admin_ui: {width: 200}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
       admin_ui: {width: 200}
       type: string
-    - name: change_note_id
-      admin_ui: {width: 252.77778}
+  changes:
+    title: changes
+    client: search
+    server: full
+    columns:
+    - name: chartid
+      admin_ui: {width: 200}
+      type: number
+    - name: chartname
+      admin_ui: {width: 200}
       type: string
-    - name: stage
+    - name: change_type
       admin_ui: {width: 200}
       type: string
     - name: change_date
       admin_ui: {width: 200}
       type: datetime
-    - name: title
-      admin_ui: {width: 253}
-      type: string
-    - name: description
-      admin_ui: {width: 200}
-      type: string
-    - name: reported_by_customer
-      admin_ui: {width: 200}
-      type: string
-    - name: priority
-      admin_ui: {width: 200}
-      type: string
-    - name: type
-      admin_ui: {width: 200}
-      type: string
-    - name: classid
-      admin_ui: {width: 200}
-      type: string
-    - name: product_area
-      admin_ui: {width: 200}
-      type: string
-    - name: function
-      admin_ui: {width: 200}
-      type: string
-    - name: difficulty
+    - name: new_mean
       admin_ui: {width: 200}
       type: number
-    - name: payoff
+    - name: reviewed
       admin_ui: {width: 200}
-      type: number
-    - name: ips
-      admin_ui: {width: 200}
-      type: number
-    - name: pick
-      admin_ui: {width: 200}
-      type: string
-    - name: investigator
-      admin_ui: {width: 200}
-      type: string
-    - name: possible_solution
-      admin_ui: {width: 200}
-      type: string
-    - name: released_in_version
-      admin_ui: {width: 200}
-      type: string
-    - name: worst_case
-      admin_ui: {width: 200}
-      type: string
-    - name: mitigations
-      admin_ui: {width: 200}
-      type: string
-    - name: severity
-      admin_ui: {width: 200}
-      type: number
-    - name: probability
-      admin_ui: {width: 200}
-      type: number
-    - name: visibility
-      admin_ui: {width: 200}
-      type: number
-    - name: rpn
-      admin_ui: {width: 200}
-      type: number
-    - name: tags
-      admin_ui: {width: 200}
-      type: string
-    - name: year_month
-      admin_ui: {width: 200}
-      type: string
-    - name: pick_note
-      admin_ui: {width: 200}
-      type: string
-    - name: user
-      admin_ui: {width: 200}
-      type: string
-    - name: created_by_firstname
-      admin_ui: {width: 200}
-      type: string
-    - name: created_by_lastname
-      admin_ui: {width: 200}
-      type: string
-    - name: found_in_version_no
-      admin_ui: {width: 200}
-      type: string
-    - name: status
-      admin_ui: {width: 200}
-      type: string
-    - name: progress
-      admin_ui: {width: 200}
-      type: number
-    - name: assigned_to
-      admin_ui: {width: 200}
-      type: string
-    - name: change_search_date
+      type: bool
+    - name: short_date
       admin_ui: {width: 200}
       type: date
-    - name: 'rpn '
+    - name: tablename
+      admin_ui: {width: 200}
+      type: string
+  projects_with_4s:
+    title: projects_with_4s
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 200}
+      type: datetime
+    - name: Measure_Value
       admin_ui: {width: 200}
       type: number
-    - name: found_in_last_two_years
+    - name: exclude_point
       admin_ui: {width: 200}
       type: bool
-    - name: assigned_to
+    - name: noteCol
       admin_ui: {width: 200}
       type: string
-    - name: due_date
-      admin_ui: {width: 200}
+  problem_cases_with_customer:
+    title: problem_cases_with_customer
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 285}
       type: datetime
-  suppported_products:
-    title: suppported_products
-    client: none
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
+  projects:
+    title: projects
+    client: search
     server: full
     columns:
-    - name: Name
+    - name: company
       admin_ui: {width: 200}
       type: string
-    - name: Account
-      admin_ui: {width: 200}
-      type: string
-    - name: 4S_Country
-      admin_ui: {width: 200}
-      type: string
-    - name: CFApplicationArea
-      admin_ui: {width: 200}
-      type: string
-    - name: InUseStatus
-      admin_ui: {width: 200}
-      type: string
-    - name: Shipping_Address_Country
-      admin_ui: {width: 200}
-      type: string
-    - name: Location_c
-      admin_ui: {width: 200}
-      type: string
-    - name: longitude
-      admin_ui: {width: 200}
-      type: number
-    - name: latitude
-      admin_ui: {width: 200}
-      type: number
-    - name: Account_id
-      admin_ui: {width: 200}
-      type: string
-    - name: System_id
-      admin_ui: {width: 200}
-      type: string
-    - name: Live_version_no
-      admin_ui: {width: 200}
-      type: string
-    - name: Version_Level
-      admin_ui: {width: 200}
-      type: string
-    - name: Customer_Type
-      admin_ui: {width: 200}
-      type: string
-    - name: Interfaces
-      admin_ui: {width: 574.181818}
-      type: string
-    - name: Inbound_INR
-      admin_ui: {width: 200}
-      type: string
-    - name: Bidirectional_SystmOne
-      admin_ui: {width: 200}
-      type: string
-    - name: Inbound_ADT
-      admin_ui: {width: 200}
-      type: string
-    - name: Inbound_Demographics
-      admin_ui: {width: 200}
-      type: string
-    - name: Inbound_Medications
-      admin_ui: {width: 200}
-      type: string
-    - name: Outbound_Billing
-      admin_ui: {width: 200}
-      type: string
-    - name: Outbound_Dosing
-      admin_ui: {width: 200}
-      type: string
-    - name: Outbound_PDF
-      admin_ui: {width: 200}
-      type: string
-    - name: Outbound_Query
-      admin_ui: {width: 200}
-      type: string
-    - name: Inbound_TestResults
-      admin_ui: {width: 200}
-      type: string
-    - name: Bidirectional_Telehealth
-      admin_ui: {width: 200}
-      type: string
-    - name: AC_Non_AC
-      admin_ui: {width: 200}
-      type: string
-    - name: Operating_System
-      admin_ui: {width: 200}
-      type: string
-    - name: Database_Version
-      admin_ui: {width: 250.01136400000001}
-      type: string
-    - name: Remote_Access_Available
-      admin_ui: {width: 200}
-      type: string
-    - name: appareas
-      admin_ui: {width: 200}
-      type: string
-  functions:
-    title: functions
-    client: none
-    server: full
-    columns:
-    - name: function
-      admin_ui: {width: 200}
-      type: string
-  change_notes_audit:
-    title: change_notes_audit
-    client: none
-    server: full
-    columns:
-    - name: description
-      admin_ui: {width: 200}
-      type: string
-    - name: reported_by_customer
-      admin_ui: {width: 200}
-      type: string
-    - name: found _in_version_no
-      admin_ui: {width: 200}
-      type: string
-    - name: possible_solution
-      admin_ui: {width: 200}
-      type: string
-    - name: stage
-      admin_ui: {width: 200}
-      type: string
-    - name: created_by_firstname
-      admin_ui: {width: 200}
-      type: string
-    - name: ips
-      admin_ui: {width: 200}
-      type: number
-    - name: difficulty
-      admin_ui: {width: 200}
-      type: number
-    - name: pick
-      admin_ui: {width: 200}
-      type: string
-    - name: due_date
-      admin_ui: {width: 200}
-      type: datetime
-    - name: created_by_lastname
-      admin_ui: {width: 200}
-      type: string
-    - name: investigator
-      admin_ui: {width: 200}
-      type: string
-    - name: product_area
-      admin_ui: {width: 200}
-      type: string
-    - name: type
-      admin_ui: {width: 200}
-      type: string
-    - name: probability
-      admin_ui: {width: 200}
-      type: number
-    - name: function
-      admin_ui: {width: 200}
-      type: string
-    - name: title
-      admin_ui: {width: 200}
-      type: string
-    - name: rpn
-      admin_ui: {width: 200}
-      type: number
-    - name: worst_case
-      admin_ui: {width: 200}
-      type: string
-    - name: change_note_id
-      admin_ui: {width: 200}
-      type: string
-    - name: priority
-      admin_ui: {width: 200}
+    - name: projectname
+      admin_ui: {width: 305}
       type: string
     - name: status
       admin_ui: {width: 200}
       type: string
-    - name: payoff
-      admin_ui: {width: 200}
-      type: number
-    - name: severity
-      admin_ui: {width: 200}
-      type: number
-    - name: released_in_version
+    - name: boardname
       admin_ui: {width: 200}
       type: string
-    - name: mitigations
+    - name: startdate
       admin_ui: {width: 200}
-      type: string
-    - name: progress
+      type: date
+    - name: enddate
       admin_ui: {width: 200}
-      type: number
-    - name: pick_note
-      admin_ui: {width: 200}
-      type: string
-    - name: assigned_to
-      admin_ui: {width: 200}
-      type: string
-    - name: user
-      admin_ui: {width: 200}
-      type: string
-    - name: visibility
-      admin_ui: {width: 200}
-      type: number
-    - name: change_date
-      admin_ui: {width: 317.181818}
-      type: datetime
-    - name: classid
-      admin_ui: {width: 200}
-      type: string
-    - name: change_search_date
-      admin_ui: {width: 200}
-      type: datetime
-    - name: found_in_last_two_years
-      admin_ui: {width: 200}
-      type: bool
-    - name: 'rpn '
-      admin_ui: {width: 200}
-      type: number
-    - name: user_changed
-      admin_ui: {width: 200}
-      type: string
-    - name: when_changed
-      admin_ui: {width: 200}
-      type: datetime
-    - name: tags
-      admin_ui: {width: 200}
-      type: string
-    - name: year_month
-      admin_ui: {width: 200}
-      type: string
-    - name: assigned_to
-      admin_ui: {width: 200}
-      type: string
-    - name: new_change_note_id
-      admin_ui: {width: 200}
-      type: string
-    - name: found_in_version_no
-      admin_ui: {width: 200}
-      type: string
-  change_id_counter:
-    title: change_id_counter
-    client: none
+      type: date
+  printing_problems:
+    title: Printing_problems
+    client: search
     server: full
     columns:
-    - name: counter
+    - name: Date_Entered
+      admin_ui: {width: 200}
+      type: datetime
+    - name: Measure_Value
       admin_ui: {width: 200}
       type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
+  problem_cases_over_3_days:
+    title: problem_cases_over_3_days
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 200}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
+  test:
+    title: Test
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 324}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
+  problems_with_customers_over_7_days:
+    title: problems_with_customers_over_7_days
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 200}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
+  cases_arriving:
+    title: cases_arriving
+    client: search
+    server: full
+    columns:
+    - name: Date_Entered
+      admin_ui: {width: 200}
+      type: datetime
+    - name: Measure_Value
+      admin_ui: {width: 200}
+      type: number
+    - name: exclude_point
+      admin_ui: {width: 200}
+      type: bool
+    - name: noteCol
+      admin_ui: {width: 200}
+      type: string
