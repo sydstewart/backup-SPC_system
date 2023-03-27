@@ -41,6 +41,34 @@ def make_backup():
      new_file4 = new_folder.create_file(filename4, supported_products_csv)
 
 
+@anvil.server.background_task
+@anvil.server.callable
+def make_backup():
+  list_of_tables =[cases_arriving,changes,charts,printing_problems,problem_cases_over_3_days,problem_cases_per_week,problem_cases_with_4s, \
+                   problem_cases_with_customer,problem_cases_with_customer_over_7_days, projects, projects_with_4s,projects_with_customers, \
+                   test,unassigned_cases,users,waiting_on_4s]
+  for item in list_of_tables:
+    
+        change_note_csv = app_tables.change_notes.search().to_csv()
+        change_note_audit_csv = app_tables.change_notes_audit.search().to_csv()
+        users_csv = app_tables.users.search().to_csv()
+        change_id_counter_csv = app_tables.change_id_counter.search().to_csv()
+        supported_products_csv = app_tables.suppported_products.search().to_csv()
+      
+        today = datetime.now() 
+      
+        folder = app_files.change_note_system_tables_backup
+        new_folder = folder.create_folder('change_note_backup'+'_'+str(today))
+        filename0 = 'change_note' + '_' +str(today)+' .csv'
+        filename1 = 'change_note_audit' + '_' +str(today)+' .csv'
+        filename2 = 'users' + '_' +str(today)+' .csv'
+        filename3 = 'change_id_counter' + '_' +str(today)+' .csv'
+        filename4 = 'supported_products' + '_' +str(today)+' .csv'
+        new_file0 = new_folder.create_file(filename0, change_note_csv)
+        new_file1 = new_folder.create_file(filename1, change_note_audit_csv )
+        new_file2 = new_folder.create_file(filename2, users_csv)
+        new_file3 = new_folder.create_file(filename3, change_id_counter_csv)
+        new_file4 = new_folder.create_file(filename4, supported_products_csv)
 
 
 
