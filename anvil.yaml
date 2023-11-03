@@ -3,7 +3,7 @@ scheduled_tasks:
   time_spec:
     n: 1
     every: day
-    at: {minute: 15, hour: 9}
+    at: {minute: 19, hour: 9}
   job_id: CSEAIMCX
 dependencies: []
 services:
@@ -110,6 +110,9 @@ services:
       quotaBytesUsed: '0'
       ownerNames: [Syd Stewart]
   server_config: {enc_delegation_refresh_token: HjBy/W5jolr4QlKYmj1ijCQSCt6ji8Pg2OHmChSwQMORLlmhcR8icitUosaYMRRW+Rd7xwhTqZL+gnY17Bf7U9XKhkuFJHK/Sa+9S8bUoMeSVdxqYcvORO4zWD0VMke85K3ri1IQmF5dtcVfVc7gaEB+CTT8NINYLjfqut9yGT+BV6mn8k46CGKViYyHjf+LkpvgPxClxwLGcBK1XV4DVgh0ebXquBQXbCFdBzs++VYdYg1R/qNRPABAmUNfs1XJKn3YgwupM0IuBWFXDeWFLpFvmzwDG1ATAbMU6NS4RvbYWme2ACw1F0zYeGwxYg==}
+- source: /runtime/services/anvil/email.yml
+  client_config: {}
+  server_config: {test_mode: true}
 package_name: Backup_Change_Notes
 allow_embedding: false
 name: Backup SPC System
