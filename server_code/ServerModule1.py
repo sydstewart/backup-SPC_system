@@ -28,6 +28,7 @@ def make_backup():
     folder = app_files.spc_support_system_backup
     today = datetime.now()
     new_folder = folder.create_folder('spc_backup'+'_'+str(today))
+    fileslist =''
     for item in list_of_tables:
        print(item)
              # rows = getattr(app_tables, 'tablename').search()
@@ -37,5 +38,14 @@ def make_backup():
        table_csv = getattr(app_tables, db_name).search().to_csv()
        filename0 = item + '_' +str(today)+' .csv'
        new_file0 = new_folder.create_file(filename0, table_csv)
+       fileslist = fileslist + filename0 + '\n'
+    address ='syd'
+    send_email(address, fileslist)
 
-
+@anvil.server.callable
+def send_email(address,fileslist):
+    anvil.email.send(
+                 from_name = "Change Note Backup", 
+                 to = "sydney.w.stewart@gmail.com",
+                 subject = 'Change Note Backup Run',
+                 text = fileslis3)
